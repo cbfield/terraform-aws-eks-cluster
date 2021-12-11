@@ -18,8 +18,8 @@ variable "encryption_config" {
 variable "iam" {
   description = <<-EOF
     (optional) Configurations for IAM created or used by the module
-    An ARN for an existing IAM role can be provided for both the cluster role and node role.
-    In either case, a role will be created with the necessary permissions if one wasn't provided.
+    An ARN for an existing IAM role can be provided for the cluster, node groups, or fargate profiles.
+    A role will be created with the necessary permissions for each of them if one wasn't provided.
     If the role created by the module is used, additional configurations can be provided for it.
     EOF
   type = object({
@@ -65,6 +65,49 @@ variable "kubernetes_version" {
 variable "name" {
   description = "The name assigned to the cluster. Used to prefix other resources created for use by the cluster."
   type        = string
+}
+
+variable "node_groups" {
+  description = "Node groups to create within this EKS cluster"
+  type = list(object({
+    ami_type             = optional(string)
+    capacity_type        = optional(string)
+    disk_size            = optional(number)
+    force_update_version = optional(bool)
+    instance_types       = optional(list(string))
+    labels               = optional(map(string))
+    launch_template = optional(object({
+      id      = optional(string)
+      name    = optional(string)
+      version = number
+    }))
+    name            = optional(string)
+    name_prefix     = optional(string)
+    node_role_arn   = optional(string)
+    release_version = optional(string)
+    remote_access = optional(object({
+      ec2_ssh_key               = optional(string)
+      source_security_group_ids = optional(list(string))
+    }))
+    scaling_config = optional(object({
+      desired_size = number
+      max_size     = number
+      min_size     = number
+    }))
+    subnet_ids = optional(list(string))
+    tags       = optional(map(string))
+    taints = optional(list(object({
+      key    = string
+      value  = optional(string)
+      effect = string
+    })))
+    update_config = optional(object({
+      max_unavailable            = optional(number)
+      max_unavailable_percentage = optional(number)
+    }))
+    version = optional(string)
+  }))
+  default = null
 }
 
 variable "tags" {

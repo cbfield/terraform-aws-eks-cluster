@@ -43,6 +43,11 @@ output "name" {
   value       = var.name
 }
 
+output "node_groups" {
+  description = "Node groups created within the cluster"
+  value       = aws_eks_node_group.node_group
+}
+
 output "tags" {
   description = "The value provided for var.tags"
   value       = var.tags

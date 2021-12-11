@@ -8,12 +8,26 @@ module "my_eks_cluster" {
     subnet_ids = ["subnet-123123", "subnet-234234"]
   }
 
+  # node_groups = [
+  #   {
+  #     name = "default"
+  #     scaling_config = {
+  #       desired_size = 5
+  #       max_size     = 1
+  #       min_size     = 1
+  #     }
+  #   }
+  # ]
+
   # iam = {
   #   cluster_role = {
   #     arn                 = "arn:aws:iam::111222333444:role/your-mom"
   #     managed_policy_arns = ["arn:aws:iam::aws:policy/potato"]
-  #     name = "your-mom"
-  #     path = "/eks/us-east-1/"
+  #     name                = "your-mom"
+  #     path                = "/eks/us-east-1/"
+  #   }
+  #   node_role = {
+  #     arn = "arn:aws:iam::111222333444:role/your-mom"
   #   }
   # }
 

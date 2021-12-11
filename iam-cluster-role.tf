@@ -7,7 +7,7 @@ resource "aws_iam_role" "cluster_role" {
   path               = try(var.iam.cluster_role.path, null)
 
   managed_policy_arns = distinct(concat(
-    try(coalesce(var.iam.cluster_role.managed_policy_arns, []), []),
+    coalesce(try(var.iam.cluster_role.managed_policy_arns, []), []),
     ["arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"]
   ))
 
