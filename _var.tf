@@ -20,16 +20,20 @@ variable "iam" {
     (optional) Configurations for IAM created or used by the module
     An ARN for an existing IAM role can be provided for both the cluster role and node role.
     In either case, a role will be created with the necessary permissions if one wasn't provided.
+    If the role created by the module is used, additional configurations can be provided for it.
     EOF
   type = object({
     cluster_role = optional(object({
       arn                 = optional(string)
       managed_policy_arns = optional(list(string))
+      name                = optional(string)
+      path                = optional(string)
       tags                = optional(map(string))
     }))
     node_role = optional(object({
       arn                 = optional(string)
       managed_policy_arns = optional(list(string))
+      path                = optional(string)
       tags                = optional(map(string))
     }))
   })
