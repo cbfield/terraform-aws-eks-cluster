@@ -30,9 +30,17 @@ variable "iam" {
       path                = optional(string)
       tags                = optional(map(string))
     }))
+    fargate_role = optional(object({
+      arn                 = optional(string)
+      managed_policy_arns = optional(list(string))
+      name                = optional(string)
+      path                = optional(string)
+      tags                = optional(map(string))
+    }))
     node_role = optional(object({
       arn                 = optional(string)
       managed_policy_arns = optional(list(string))
+      name                = optional(string)
       path                = optional(string)
       tags                = optional(map(string))
     }))
