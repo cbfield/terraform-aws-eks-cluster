@@ -1,5 +1,5 @@
 resource "aws_eks_node_group" "node_group" {
-  for_each = { for ng in coalesce(var.node_groups, []) : ng.name => ng }
+  for_each = { for ng in var.node_groups : ng.name => ng }
 
   ami_type               = each.value.ami_type
   capacity_type          = each.value.capacity_type

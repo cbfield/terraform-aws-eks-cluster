@@ -1,5 +1,5 @@
 resource "aws_eks_fargate_profile" "fargate_profile" {
-  for_each = { for fp in coalesce(var.fargate_profiles, []) : fp.name => fp }
+  for_each = { for fp in var.fargate_profiles : fp.name => fp }
 
   cluster_name         = aws_eks_cluster.cluster.name
   fargate_profile_name = each.value.name
@@ -17,7 +17,7 @@ resource "aws_eks_fargate_profile" "fargate_profile" {
 
   dynamic "selector" {
     for_each = {
-      for s in coalesce(each.value.selectors, []) : (
+      for s in each.value.selectors : (
         "${s.namespace}-${coalesce(
           join(",", [for key, value in coalesce(s.labels, {}) : "${key}:${value}"]),
           "nolabels"

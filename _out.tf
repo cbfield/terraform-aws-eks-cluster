@@ -3,6 +3,11 @@ output "addons" {
   value       = aws_eks_addon.addon
 }
 
+output "aws_auth" {
+  description = "The value provided for var.aws_auth"
+  value       = var.aws_auth
+}
+
 output "enabled_cluster_log_types" {
   description = "The value provided for var.enabled_cluster_log_types"
   value       = var.enabled_cluster_log_types
@@ -11,6 +16,12 @@ output "enabled_cluster_log_types" {
 output "cluster" {
   description = "The EKS cluster itself"
   value       = aws_eks_cluster.cluster
+}
+
+output "cluster_auth" {
+  description = "Kube API auth for the cluster"
+  value       = data.aws_eks_cluster_auth.auth
+  sensitive   = true
 }
 
 output "cluster_role" {

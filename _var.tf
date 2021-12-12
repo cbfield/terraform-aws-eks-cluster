@@ -7,6 +7,19 @@ variable "addons" {
     tags                     = optional(map(string))
     version                  = optional(string)
   }))
+  default = []
+}
+
+variable "aws_auth" {
+  description = "Configurations of the IAM authorizations for this cluster"
+  type = object({
+    create = optional(bool)
+    map_roles = optional(list(object({
+      role_arn = string
+      username = string
+      groups   = list(string)
+    })))
+  })
   default = null
 }
 
@@ -39,7 +52,7 @@ variable "fargate_profiles" {
     }))
     tags = optional(map(string))
   }))
-  default = null
+  default = []
 }
 
 variable "iam" {
@@ -145,11 +158,11 @@ variable "node_groups" {
       ec2_ssh_key               = optional(string)
       source_security_group_ids = optional(list(string))
     }))
-    scaling_config = optional(object({
+    scaling_config = object({
       desired_size = number
       max_size     = number
       min_size     = number
-    }))
+    })
     subnet_ids = optional(list(string))
     tags       = optional(map(string))
     taints = optional(list(object({
@@ -163,7 +176,7 @@ variable "node_groups" {
     }))
     version = optional(string)
   }))
-  default = null
+  default = []
 }
 
 variable "tags" {

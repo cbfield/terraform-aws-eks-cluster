@@ -4,7 +4,7 @@
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "eks.amazonaws.com"
+        "Service": "${service}.amazonaws.com"
       },
       "Action": "sts:AssumeRole"
     }

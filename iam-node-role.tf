@@ -2,13 +2,17 @@ resource "aws_iam_role" "node_role" {
   count = (
     try(var.iam.node_role.arn, null) != null
     ) || (
-    alltrue([for ng in coalesce(var.node_groups, []) : ng.node_role_arn != null])
+    alltrue([for ng in var.node_groups : ng.node_role_arn != null])
   ) ? 0 : 1
 
-  assume_role_policy = file("${path.module}/templates/iam/node-role-assume-role-policy.json")
-  description        = "Default role used by nodegroups within the EKS cluster ${var.name}"
-  name               = coalesce(try(var.iam.node_role.name, null), "eks-${var.name}-nodes")
-  path               = try(var.iam.node_role.path, null)
+  description = "Default role used by nodegroups within the EKS cluster ${var.name}"
+  name        = coalesce(try(var.iam.node_role.name, null), "eks-${var.name}-nodes")
+  path        = try(var.iam.node_role.path, null)
+
+  assume_role_policy = templatefile(
+    "${path.module}/templates/assume-role-policy.json.tpl", {
+      service = "ec2"
+  })
 
   managed_policy_arns = distinct(concat(
     coalesce(try(var.iam.node_role.managed_policy_arns, []), []),

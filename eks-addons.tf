@@ -1,5 +1,5 @@
 resource "aws_eks_addon" "addon" {
-  for_each = { for addon in coalesce(var.addons, []) : addon.name => addon }
+  for_each = { for addon in var.addons : addon.name => addon }
 
   addon_name               = each.value.name
   addon_version            = each.value.version

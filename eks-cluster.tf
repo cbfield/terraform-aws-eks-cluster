@@ -37,4 +37,6 @@ resource "aws_eks_cluster" "cluster" {
   tags = merge(var.tags, {
     "Managed By Terraform" = "true"
   })
+
+  depends_on = [aws_cloudwatch_log_group.logs]
 }

@@ -5,45 +5,7 @@ module "my_eks_cluster" {
   kubernetes_version = "1.21"
 
   vpc_config = {
-    subnet_ids = ["subnet-123123", "subnet-234234"]
+    endpoint_public_access = true
+    subnet_ids             = ["subnet-9e110eb6", "subnet-2c596c55"]
   }
-
-  # node_groups = [
-  #   {
-  #     name = "default"
-  #     scaling_config = {
-  #       desired_size = 5
-  #       max_size     = 1
-  #       min_size     = 1
-  #     }
-  #   }
-  # ]
-
-  # fargate_profiles = [
-  #   {
-  #     name      = "default"
-  #     selectors = [{ namespace = "default" }]
-  #   }
-  # ]
-
-  # iam = {
-  #   cluster_role = {
-  #     arn                 = "arn:aws:iam::111222333444:role/your-mom"
-  #     managed_policy_arns = ["arn:aws:iam::aws:policy/potato"]
-  #     name                = "your-mom"
-  #     path                = "/eks/us-east-1/"
-  #   }
-  #   fargate_role = {
-  #     arn = "arn:aws:iam::111222333444:role/your-mom"
-  #   }
-  #   node_role = {
-  #     arn = "arn:aws:iam::111222333444:role/your-mom"
-  #   }
-  # }
-
-  # kubernetes_network_config = {
-  #   service_ipv4_cidr = "10.20.0.0/16"
-  # }
-
-  # addons = [{ name = "vpc-cni" }]
 }
