@@ -23,6 +23,11 @@ output "encryption_key_arn" {
   value       = one(aws_kms_alias.alias)
 }
 
+output "fargate_profiles" {
+  description = "Fargate profiles created within the cluster"
+  value       = aws_eks_fargate_profile.fargate_profile
+}
+
 output "iam" {
   description = "The value provided for var.iam"
   value       = var.iam
@@ -49,8 +54,10 @@ output "node_groups" {
 }
 
 output "tags" {
-  description = "The value provided for var.tags"
-  value       = var.tags
+  description = "Tags assigned to the cluster"
+  value = merge(var.tags, {
+    "Managed By Terraform" = "true"
+  })
 }
 
 output "vpc_config" {

@@ -19,12 +19,22 @@ module "my_eks_cluster" {
   #   }
   # ]
 
+  # fargate_profiles = [
+  #   {
+  #     name      = "default"
+  #     selectors = [{ namespace = "default" }]
+  #   }
+  # ]
+
   # iam = {
   #   cluster_role = {
   #     arn                 = "arn:aws:iam::111222333444:role/your-mom"
   #     managed_policy_arns = ["arn:aws:iam::aws:policy/potato"]
   #     name                = "your-mom"
   #     path                = "/eks/us-east-1/"
+  #   }
+  #   fargate_role = {
+  #     arn = "arn:aws:iam::111222333444:role/your-mom"
   #   }
   #   node_role = {
   #     arn = "arn:aws:iam::111222333444:role/your-mom"

@@ -3,7 +3,7 @@ resource "aws_eks_node_group" "node_group" {
 
   ami_type               = each.value.ami_type
   capacity_type          = each.value.capacity_type
-  cluster_name           = each.value.name
+  cluster_name           = aws_eks_cluster.cluster.name
   disk_size              = each.value.disk_size
   force_update_version   = each.value.force_update_version
   instance_types         = each.value.instance_types
@@ -15,8 +15,8 @@ resource "aws_eks_node_group" "node_group" {
 
   node_role_arn = coalesce(
     each.value.node_role_arn,
+    try(var.iam.node_role.arn, null),
     try(aws_iam_role.node_role.0.arn, null),
-    try(var.iam.node_role.arn, null)
   )
 
   subnet_ids = coalesce(

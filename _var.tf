@@ -15,6 +15,21 @@ variable "encryption_config" {
   default = null
 }
 
+variable "fargate_profiles" {
+  description = "(optional) Fargate profiles to create within this EKS cluster"
+  type = list(object({
+    name                   = string
+    pod_execution_role_arn = optional(string)
+    subnet_ids             = optional(list(string))
+    selectors = list(object({
+      namespace = string
+      labels    = optional(map(string))
+    }))
+    tags = optional(map(string))
+  }))
+  default = null
+}
+
 variable "iam" {
   description = <<-EOF
     (optional) Configurations for IAM created or used by the module
@@ -68,7 +83,7 @@ variable "name" {
 }
 
 variable "node_groups" {
-  description = "Node groups to create within this EKS cluster"
+  description = "(optional) Node groups to create within this EKS cluster"
   type = list(object({
     ami_type             = optional(string)
     capacity_type        = optional(string)
