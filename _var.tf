@@ -1,3 +1,15 @@
+variable "addons" {
+  description = "Addons to install in the cluster"
+  type = list(object({
+    name                     = string
+    resolve_conflicts        = optional(string)
+    service_account_role_arn = optional(string)
+    tags                     = optional(map(string))
+    version                  = optional(string)
+  }))
+  default = null
+}
+
 variable "enabled_cluster_log_types" {
   description = "(optional) Log types to be tracked in Cloudwatch (api, audit, authenticator, controllerManager, scheduler)"
   type        = list(string)

@@ -12,7 +12,10 @@ resource "aws_iam_role" "fargate_role" {
 
   managed_policy_arns = distinct(concat(
     coalesce(try(var.iam.fargate_role.managed_policy_arns, []), []),
-    ["arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy"]
+    [
+      "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+      "arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy",
+    ]
   ))
 
   tags = merge(try(var.iam.fargate_role.tags, null), {

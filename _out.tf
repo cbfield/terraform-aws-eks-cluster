@@ -1,3 +1,8 @@
+output "addons" {
+  description = "Addons installed in the cluster"
+  value       = aws_eks_addon.addon
+}
+
 output "enabled_cluster_log_types" {
   description = "The value provided for var.enabled_cluster_log_types"
   value       = var.enabled_cluster_log_types

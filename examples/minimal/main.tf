@@ -44,4 +44,6 @@ module "my_eks_cluster" {
   # kubernetes_network_config = {
   #   service_ipv4_cidr = "10.20.0.0/16"
   # }
+
+  # addons = [{ name = "vpc-cni" }]
 }
