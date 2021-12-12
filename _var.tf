@@ -77,6 +77,17 @@ variable "kubernetes_version" {
   default     = null
 }
 
+variable "log_group" {
+  description = "(optional) Configurations for the Cloudwatch log group created for cluster logs"
+  type = object({
+    name              = optional(string)
+    name_prefix       = optional(string)
+    retention_in_days = optional(number)
+    tags              = optional(map(string))
+  })
+  default = null
+}
+
 variable "name" {
   description = "The name assigned to the cluster. Used to prefix other resources created for use by the cluster."
   type        = string

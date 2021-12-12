@@ -43,6 +43,11 @@ output "kubernetes_network_config" {
   value       = var.kubernetes_network_config
 }
 
+output "log_group" {
+  description = "The Cloudwatch log group created for cluster logs"
+  value       = aws_cloudwatch_log_group.logs
+}
+
 output "name" {
   description = "The value provided for var.name"
   value       = var.name
