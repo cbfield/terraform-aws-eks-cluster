@@ -75,6 +75,24 @@ variable "iam" {
   default = null
 }
 
+variable "identity_provider_config" {
+  description = "(optional) IdP config to use with this cluster"
+  type = object({
+    oidc = object({
+      client_id                     = string
+      groups_claim                  = optional(string)
+      groups_prefix                 = optional(string)
+      identity_provider_config_name = string
+      issuer_url                    = string
+      required_claims               = optional(map(string))
+      username_claim                = optional(string)
+      username_prefix               = optional(string)
+    })
+    tags = optional(map(string))
+  })
+  default = null
+}
+
 variable "kubernetes_network_config" {
   description = "(optional) Network configurations for the cluster"
   type = object({

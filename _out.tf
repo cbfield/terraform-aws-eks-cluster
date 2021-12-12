@@ -38,6 +38,11 @@ output "iam" {
   value       = var.iam
 }
 
+output "identity_provider_config" {
+  description = "IdP configuration used by the cluster, if provided"
+  value       = one(aws_eks_identity_provider_config.identity)
+}
+
 output "kubernetes_version" {
   description = "The value provided for var.kubernetes_version"
   value       = var.kubernetes_version
