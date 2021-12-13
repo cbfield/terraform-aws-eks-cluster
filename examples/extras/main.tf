@@ -45,7 +45,6 @@ module "my_eks_cluster" {
 
   iam = {
     cluster_role = {
-      arn                 = "arn:aws:iam::111222333444:role/something"
       managed_policy_arns = ["arn:aws:iam::aws:policy/something"]
       name                = "cluster-123123"
       path                = "/eks/us-east-1/"
