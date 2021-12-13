@@ -50,8 +50,8 @@ output "iam" {
 }
 
 output "identity_provider_config" {
-  description = "IdP configuration used by the cluster, if provided"
-  value       = one(aws_eks_identity_provider_config.identity)
+  description = "IdP configurations used by the cluster"
+  value       = aws_eks_identity_provider_config.identity
 }
 
 output "kubernetes_version" {

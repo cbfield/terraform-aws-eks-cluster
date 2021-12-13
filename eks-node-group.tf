@@ -48,7 +48,7 @@ resource "aws_eks_node_group" "node_group" {
   }
 
   dynamic "taint" {
-    for_each = { for t in coalesce(each.value.taints, []) : "${t.key}:${coalesce(t.value, "novalue")}:${t.effect}" => t }
+    for_each = { for t in coalesce(each.value.taints, []) : join(":", [t.key, coalesce(t.value, "null"), t.effect]) => t }
     content {
       key    = taint.value.key
       value  = taint.value.value

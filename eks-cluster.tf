@@ -9,10 +9,7 @@ resource "aws_eks_cluster" "cluster" {
   )
 
   encryption_config {
-    resources = coalesce(
-      try(var.encryption_config.resources, null),
-      ["secrets"]
-    )
+    resources = coalesce(try(var.encryption_config.resources, null), ["secrets"])
 
     provider {
       key_arn = coalesce(

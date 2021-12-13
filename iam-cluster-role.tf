@@ -8,14 +8,15 @@ resource "aws_iam_role" "cluster_role" {
   assume_role_policy = templatefile(
     "${path.module}/templates/assume-role-policy.json.tpl", {
       service = "eks"
-  })
+    }
+  )
 
-  managed_policy_arns = distinct(concat(
-    coalesce(try(var.iam.cluster_role.managed_policy_arns, []), []),
+  managed_policy_arns = coalesce(
+    try(var.iam.cluster_role.managed_policy_arns, null),
     ["arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"]
-  ))
+  )
 
-  tags = merge(try(var.iam.cluster_role.tags, null), {
+  tags = merge(try(var.iam.cluster_role.tags, {}), {
     "Managed By Terraform" = "true"
   })
 }

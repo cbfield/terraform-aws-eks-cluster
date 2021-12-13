@@ -7,7 +7,7 @@ resource "aws_eks_fargate_profile" "fargate_profile" {
   pod_execution_role_arn = coalesce(
     each.value.pod_execution_role_arn,
     try(var.iam.fargate_role.arn, null),
-    try(aws_iam_role.fargate_role.0.arn, null),
+    try(aws_iam_role.fargate_role.0.arn, null)
   )
 
   subnet_ids = coalesce(
@@ -17,12 +17,10 @@ resource "aws_eks_fargate_profile" "fargate_profile" {
 
   dynamic "selector" {
     for_each = {
-      for s in each.value.selectors : (
-        "${s.namespace}-${coalesce(
-          join(",", [for key, value in coalesce(s.labels, {}) : "${key}:${value}"]),
-          "nolabels"
-        )}"
-      ) => s
+      for s in coalesce(each.value.selectors, []) : join("-", concat(
+        [s.namespace],
+        [join(",", [for key, value in coalesce(s.labels, {}) : "${key}:${value}"])]
+      )) => s
     }
     content {
       namespace = selector.value.namespace

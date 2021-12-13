@@ -15,7 +15,12 @@ variable "aws_auth" {
   type = object({
     create = optional(bool)
     map_roles = optional(list(object({
-      role_arn = string
+      rolearn  = string
+      username = string
+      groups   = list(string)
+    })))
+    map_users = optional(list(object({
+      userarn  = string
       username = string
       groups   = list(string)
     })))
@@ -26,7 +31,7 @@ variable "aws_auth" {
 variable "enabled_cluster_log_types" {
   description = "(optional) Log types to be tracked in Cloudwatch (api, audit, authenticator, controllerManager, scheduler)"
   type        = list(string)
-  default     = null
+  default     = []
 }
 
 variable "encryption_config" {
@@ -90,7 +95,7 @@ variable "iam" {
 
 variable "identity_provider_config" {
   description = "(optional) IdP config to use with this cluster"
-  type = object({
+  type = list(object({
     oidc = object({
       client_id                     = string
       groups_claim                  = optional(string)
@@ -102,8 +107,8 @@ variable "identity_provider_config" {
       username_prefix               = optional(string)
     })
     tags = optional(map(string))
-  })
-  default = null
+  }))
+  default = []
 }
 
 variable "kubernetes_network_config" {

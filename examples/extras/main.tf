@@ -5,48 +5,52 @@ module "my_eks_cluster" {
   kubernetes_version = "1.21"
 
   vpc_config = {
-    subnet_ids = ["subnet-9e110eb6", "subnet-2c596c55"]
+    endpoint_public_access = true
+    subnet_ids = [
+      "subnet-9e110eb6",
+      "subnet-74393d2e",
+    ]
   }
 
   aws_auth = {
     map_roles = [{
-      role_arn = "arn:aws:iam::111222333444:role/devops-admin"
+      rolearn  = "arn:aws:iam::111222333444:role/devops-admin"
       username = "devops-admin"
       groups   = ["system:masters"]
     }]
   }
 
-  # node_groups = [
-  #   {
-  #     name = "default"
-  #     scaling_config = {
-  #       desired_size = 5
-  #       max_size     = 1
-  #       min_size     = 1
-  #     }
-  #   }
-  # ]
+  node_groups = [
+    {
+      name = "default"
+      scaling_config = {
+        desired_size = 1
+        max_size     = 3
+        min_size     = 1
+      }
+    }
+  ]
 
-  # fargate_profiles = [
-  #   {
-  #     name      = "default"
-  #     selectors = [{ namespace = "default" }]
-  #   }
-  # ]
+  fargate_profiles = [
+    {
+      name      = "default"
+      selectors = [{ namespace = "default" }]
+    }
+  ]
 
   # iam = {
   #   cluster_role = {
-  #     arn                 = "arn:aws:iam::111222333444:role/devops-admin"
+  #     arn                 = "arn:aws:iam::111222333444:role/something"
   #     managed_policy_arns = ["arn:aws:iam::aws:policy/something"]
-  #     name                = "devops-admin"
+  #     name                = "cluster-123123"
   #     path                = "/eks/us-east-1/"
   #   }
   #   fargate_role = {
-  #     arn = "arn:aws:iam::111222333444:role/devops-admin"
+  #     arn = "arn:aws:iam::111222333444:role/something"
   #   }
-  # node_role = {
-  #   arn = "arn:aws:iam::111222333444:role/devops-admin"
-  # }
+  #   node_role = {
+  #     arn = "arn:aws:iam::111222333444:role/something"
+  #   }
   # }
 
   # kubernetes_network_config = {
