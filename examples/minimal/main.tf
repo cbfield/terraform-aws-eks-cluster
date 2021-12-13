@@ -5,6 +5,6 @@ module "my_eks_cluster" {
   kubernetes_version = "1.21"
 
   vpc_config = {
-    subnet_ids = ["subnet-9e110eb6", "subnet-2c596c55"]
+    subnet_ids = ["subnet-345345", "subnet-456456"]
   }
 }

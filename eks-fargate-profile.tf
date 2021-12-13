@@ -12,7 +12,7 @@ resource "aws_eks_fargate_profile" "fargate_profile" {
 
   subnet_ids = coalesce(
     each.value.subnet_ids,
-    var.vpc_config.subnet_ids
+    var.default_compute_subnet_ids
   )
 
   dynamic "selector" {

@@ -21,7 +21,7 @@ resource "aws_eks_node_group" "node_group" {
 
   subnet_ids = coalesce(
     each.value.subnet_ids,
-    var.vpc_config.subnet_ids
+    var.default_compute_subnet_ids
   )
 
   dynamic "launch_template" {

@@ -28,6 +28,12 @@ variable "aws_auth" {
   default = null
 }
 
+variable "default_compute_subnet_ids" {
+  description = "IDs of subnets to use by default when creating node groups or fargate profiles"
+  type        = list(string)
+  default     = []
+}
+
 variable "enabled_cluster_log_types" {
   description = "(optional) Log types to be tracked in Cloudwatch (api, audit, authenticator, controllerManager, scheduler)"
   type        = list(string)

@@ -29,6 +29,11 @@ output "cluster_role" {
   value       = one(aws_iam_role.cluster_role)
 }
 
+output "default_compute_subnet_ids" {
+  description = "The value provided for var.default_compute_subnet_ids"
+  value       = var.default_compute_subnet_ids
+}
+
 output "encryption_key" {
   description = "The KMS key created to encrypt objects within the cluster, if one wasn't provided"
   value       = one(aws_kms_key.key)

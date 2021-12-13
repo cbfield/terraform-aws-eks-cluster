@@ -7,10 +7,15 @@ module "my_eks_cluster" {
   vpc_config = {
     endpoint_public_access = true
     subnet_ids = [
-      "subnet-9e110eb6",
-      "subnet-74393d2e",
+      "subnet-123123",
+      "subnet-234234",
     ]
   }
+
+  default_compute_subnet_ids = [
+    "subnet-345345",
+    "subnet-456456",
+  ]
 
   aws_auth = {
     map_roles = [{
