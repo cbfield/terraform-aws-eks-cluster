@@ -43,24 +43,24 @@ module "my_eks_cluster" {
     }
   ]
 
-  # iam = {
-  #   cluster_role = {
-  #     arn                 = "arn:aws:iam::111222333444:role/something"
-  #     managed_policy_arns = ["arn:aws:iam::aws:policy/something"]
-  #     name                = "cluster-123123"
-  #     path                = "/eks/us-east-1/"
-  #   }
-  #   fargate_role = {
-  #     arn = "arn:aws:iam::111222333444:role/something"
-  #   }
-  #   node_role = {
-  #     arn = "arn:aws:iam::111222333444:role/something"
-  #   }
-  # }
+  iam = {
+    cluster_role = {
+      arn                 = "arn:aws:iam::111222333444:role/something"
+      managed_policy_arns = ["arn:aws:iam::aws:policy/something"]
+      name                = "cluster-123123"
+      path                = "/eks/us-east-1/"
+    }
+    fargate_role = {
+      arn = "arn:aws:iam::111222333444:role/something"
+    }
+    node_role = {
+      arn = "arn:aws:iam::111222333444:role/something"
+    }
+  }
 
-  # kubernetes_network_config = {
-  #   service_ipv4_cidr = "10.20.0.0/16"
-  # }
+  kubernetes_network_config = {
+    service_ipv4_cidr = "10.20.0.0/16"
+  }
 
-  # addons = [{ name = "vpc-cni" }]
+  addons = [{ name = "vpc-cni" }]
 }
