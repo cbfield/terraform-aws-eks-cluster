@@ -61,5 +61,7 @@ module "my_eks_cluster" {
     service_ipv4_cidr = "10.20.0.0/16"
   }
 
-  addons = [{ name = "vpc-cni" }]
+  addons = [
+    { name = "vpc-cni" }
+  ]
 }
