@@ -18,11 +18,13 @@ module "my_eks_cluster" {
   ]
 
   aws_auth = {
-    map_roles = [{
-      rolearn  = "arn:aws:iam::111222333444:role/devops-admin"
-      username = "devops-admin"
-      groups   = ["system:masters"]
-    }]
+    map_roles = [
+      {
+        rolearn  = "arn:aws:iam::111222333444:role/devops-admin"
+        username = "devops-admin"
+        groups   = ["system:masters"]
+      },
+    ]
   }
 
   node_groups = [
@@ -33,14 +35,14 @@ module "my_eks_cluster" {
         max_size     = 3
         min_size     = 1
       }
-    }
+    },
   ]
 
   fargate_profiles = [
     {
       name      = "default"
       selectors = [{ namespace = "default" }]
-    }
+    },
   ]
 
   iam = {
