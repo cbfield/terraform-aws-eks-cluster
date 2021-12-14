@@ -36,4 +36,6 @@ resource "kubernetes_config_map" "aws_auth" {
       users = coalesce(try(var.aws_auth.map_users, null), [])
     })
   }
+
+  depends_on = [aws_eks_cluster.cluster]
 }
