@@ -1,4 +1,4 @@
-resource "aws_iam_openid_connect_provider" "default" {
+resource "aws_iam_openid_connect_provider" "cluster" {
   count = coalesce(try(var.iam.create_oidc_provider, null), true) ? 1 : 0
 
   client_id_list  = ["sts.amazonaws.com"]
