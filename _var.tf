@@ -81,6 +81,7 @@ variable "iam" {
       path                = optional(string)
       tags                = optional(map(string))
     }))
+    create_oidc_provider = optional(bool)
     fargate_role = optional(object({
       arn                 = optional(string)
       managed_policy_arns = optional(list(string))
