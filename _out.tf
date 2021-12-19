@@ -84,6 +84,11 @@ output "node_groups" {
   value       = aws_eks_node_group.node_group
 }
 
+output "oidc_provider" {
+  description = "The OIDC provider created from the cluster"
+  value       = one(aws_iam_openid_connect_provider.cluster)
+}
+
 output "tags" {
   description = "Tags assigned to the cluster"
   value = merge(var.tags, {
