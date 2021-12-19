@@ -28,6 +28,12 @@ variable "aws_auth" {
   default = null
 }
 
+variable "create" {
+  description = "Use to toggle creation of sources by this module"
+  type        = bool
+  default     = true
+}
+
 variable "default_compute_subnet_ids" {
   description = "IDs of subnets to use by default when creating node groups or fargate profiles"
   type        = list(string)

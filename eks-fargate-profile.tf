@@ -1,7 +1,7 @@
 resource "aws_eks_fargate_profile" "fargate_profile" {
-  for_each = { for fp in var.fargate_profiles : fp.name => fp }
+  for_each = var.create ? { for fp in var.fargate_profiles : fp.name => fp } : {}
 
-  cluster_name         = aws_eks_cluster.cluster.name
+  cluster_name         = aws_eks_cluster.cluster[0].name
   fargate_profile_name = each.value.name
 
   pod_execution_role_arn = coalesce(

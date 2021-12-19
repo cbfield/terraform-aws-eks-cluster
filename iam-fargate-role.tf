@@ -1,5 +1,5 @@
 resource "aws_iam_role" "fargate_role" {
-  count = try(var.iam.fargate_role.arn, null) == null && anytrue([
+  count = var.create && try(var.iam.fargate_role.arn, null) == null && anytrue([
     for fp in var.fargate_profiles : fp.pod_execution_role_arn == null
   ]) ? 1 : 0
 

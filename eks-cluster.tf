@@ -1,4 +1,6 @@
 resource "aws_eks_cluster" "cluster" {
+  count = var.create ? 1 : 0
+
   enabled_cluster_log_types = var.enabled_cluster_log_types
   name                      = var.name
   version                   = var.kubernetes_version
@@ -35,5 +37,5 @@ resource "aws_eks_cluster" "cluster" {
     "Managed By Terraform" = "true"
   })
 
-  depends_on = [aws_cloudwatch_log_group.logs]
+  depends_on = [aws_cloudwatch_log_group.logs[0]]
 }

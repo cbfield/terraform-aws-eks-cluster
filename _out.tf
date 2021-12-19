@@ -15,18 +15,23 @@ output "enabled_cluster_log_types" {
 
 output "cluster" {
   description = "The EKS cluster itself"
-  value       = aws_eks_cluster.cluster
+  value       = one(aws_eks_cluster.cluster)
 }
 
 output "cluster_auth" {
   description = "Kube API auth for the cluster"
-  value       = data.aws_eks_cluster_auth.auth
+  value       = one(data.aws_eks_cluster_auth.auth)
   sensitive   = true
 }
 
 output "cluster_role" {
   description = "The role created for use as the cluster role, if one wasn't provided"
   value       = one(aws_iam_role.cluster_role)
+}
+
+output "create" {
+  description = "The value provided for var.create"
+  value       = var.create
 }
 
 output "default_compute_subnet_ids" {
@@ -71,7 +76,7 @@ output "kubernetes_network_config" {
 
 output "log_group" {
   description = "The Cloudwatch log group created for cluster logs"
-  value       = aws_cloudwatch_log_group.logs
+  value       = one(aws_cloudwatch_log_group.logs)
 }
 
 output "name" {

@@ -1,5 +1,5 @@
 resource "aws_kms_key" "key" {
-  count = try(var.encryption_config.provider.key_arn, null) == null ? 1 : 0
+  count = var.create && try(var.encryption_config.provider.key_arn, null) == null ? 1 : 0
 
   description = "Encrypts the contents of the EKS cluster ${var.name}"
 
@@ -10,8 +10,8 @@ resource "aws_kms_key" "key" {
 }
 
 resource "aws_kms_alias" "alias" {
-  count = try(var.encryption_config.provider.key_arn, null) == null ? 1 : 0
+  count = var.create && try(var.encryption_config.provider.key_arn, null) == null ? 1 : 0
 
   name          = "alias/eks-${var.name}"
-  target_key_id = aws_kms_key.key.0.arn
+  target_key_id = aws_kms_key.key[0].arn
 }

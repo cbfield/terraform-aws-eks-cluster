@@ -1,5 +1,5 @@
 resource "aws_iam_role" "cluster_role" {
-  count = try(var.iam.cluster_role.arn, null) == null ? 1 : 0
+  count = var.create && try(var.iam.cluster_role.arn, null) == null ? 1 : 0
 
   description = "Role used by the EKS cluster ${var.name}"
   name        = coalesce(try(var.iam.cluster_role.name, null), "eks-${var.name}-cluster")

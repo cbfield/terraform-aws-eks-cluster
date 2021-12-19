@@ -1,5 +1,5 @@
 resource "aws_iam_role" "node_role" {
-  count = try(var.iam.node_role.arn, null) == null && anytrue([
+  count = var.create && try(var.iam.node_role.arn, null) == null && anytrue([
     for ng in var.node_groups : ng.node_role_arn == null
   ]) ? 1 : 0
 
