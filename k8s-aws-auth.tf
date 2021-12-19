@@ -1,5 +1,5 @@
 resource "kubernetes_config_map" "aws_auth" {
-  count = coalesce(try(var.aws_auth.create, true), true) ? 1 : 0
+  count = var.create && coalesce(try(var.aws_auth.create, true), true) ? 1 : 0
 
   metadata {
     name      = "aws-auth"
@@ -37,5 +37,5 @@ resource "kubernetes_config_map" "aws_auth" {
     })
   }
 
-  depends_on = [aws_eks_cluster.cluster]
+  depends_on = [aws_eks_cluster.cluster[0]]
 }

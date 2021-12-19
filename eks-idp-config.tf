@@ -1,7 +1,7 @@
 resource "aws_eks_identity_provider_config" "identity" {
-  for_each = { for idp in var.identity_provider_config : idp.oidc.client_id => idp }
+  for_each = var.create ? { for idp in var.identity_provider_config : idp.oidc.client_id => idp } : {}
 
-  cluster_name = aws_eks_cluster.cluster.name
+  cluster_name = aws_eks_cluster.cluster[0].name
 
   oidc {
     client_id                     = each.value.oidc.client_id
