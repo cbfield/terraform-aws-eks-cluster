@@ -13,7 +13,8 @@ variable "addons" {
 variable "aws_auth" {
   description = "Configurations of the IAM authorizations for this cluster"
   type = object({
-    create = optional(bool)
+    create    = optional(bool)
+    exec_path = optional(string)
     map_roles = optional(list(object({
       rolearn  = string
       username = string
@@ -24,6 +25,7 @@ variable "aws_auth" {
       username = string
       groups   = list(string)
     })))
+    method = optional(string)
   })
   default = null
 }
