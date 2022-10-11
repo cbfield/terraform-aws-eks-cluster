@@ -26,21 +26,6 @@ module "my_eks_cluster" {
     }
   }
 
-  aws_auth = {
-    map_roles = [
-      {
-        rolearn  = "arn:aws:iam::111222333444:role/devops-admin"
-        username = "devops-admin"
-        groups   = ["system:masters"]
-      },
-      {
-        rolearn  = "arn:aws:iam::111222333444:role/app1-admin"
-        username = "app1-admin"
-        groups   = ["app1-admin"]
-      },
-    ]
-  }
-
   addons = [
     {
       name    = "vpc-cni"

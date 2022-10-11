@@ -10,26 +10,6 @@ variable "addons" {
   default = []
 }
 
-variable "aws_auth" {
-  description = "Configurations of the IAM authorizations for this cluster"
-  type = object({
-    create    = optional(bool)
-    exec_path = optional(string)
-    map_roles = optional(list(object({
-      rolearn  = string
-      username = string
-      groups   = list(string)
-    })))
-    map_users = optional(list(object({
-      userarn  = string
-      username = string
-      groups   = list(string)
-    })))
-    method = optional(string)
-  })
-  default = null
-}
-
 variable "create" {
   description = "Use to toggle creation of sources by this module"
   type        = bool
