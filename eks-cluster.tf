@@ -11,6 +11,11 @@ resource "aws_eks_cluster" "this" {
     try(aws_iam_role.cluster_role.0.arn, null)
   )
 
+  access_config {
+    authentication_mode                         = var.access_config.authentication_mode
+    bootstrap_cluster_creator_admin_permissions = var.access_config.bootstrap_cluster_creator_admin_permissions
+  }
+
   encryption_config {
     resources = coalesce(try(var.encryption_config.resources, null), ["secrets"])
 
