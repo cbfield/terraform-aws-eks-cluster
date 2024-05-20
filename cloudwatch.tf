@@ -1,4 +1,4 @@
-resource "aws_cloudwatch_log_group" "logs" {
+resource "aws_cloudwatch_log_group" "this" {
   count = var.create ? 1 : 0
 
   name = try(var.log_group.name_prefix, null) == null ? coalesce(

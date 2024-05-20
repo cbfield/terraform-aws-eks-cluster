@@ -1,11 +1,10 @@
-module "my_eks_cluster" {
+module "eks_cluster" {
   source = "../../"
 
+  # required arguments
   name = "my-eks-cluster"
+
   vpc_config = {
-    subnet_ids = [
-      "subnet-345345",
-      "subnet-456456"
-    ]
+    subnet_ids = ["subnet-123123", "subnet-234234"]
   }
 }

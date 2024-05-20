@@ -1,14 +1,3 @@
-```
-module "my_eks_cluster" {
-  source = "../../"
+# Minimal
 
-  name = "my-eks-cluster"
-  vpc_config = {
-    subnet_ids = [
-      "subnet-345345",
-      "subnet-456456"
-    ]
-  }
-}
-
-```
+This example is meant to show an instantiation of this module with the minimum required configurations to successfully build it.

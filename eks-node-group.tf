@@ -1,9 +1,9 @@
-resource "aws_eks_node_group" "node_group" {
+resource "aws_eks_node_group" "this" {
   for_each = var.create ? { for ng in var.node_groups : ng.name => ng } : {}
 
   ami_type               = each.value.ami_type
   capacity_type          = each.value.capacity_type
-  cluster_name           = aws_eks_cluster.cluster[0].name
+  cluster_name           = aws_eks_cluster.this[0].name
   disk_size              = each.value.disk_size
   force_update_version   = each.value.force_update_version
   instance_types         = each.value.instance_types
@@ -12,6 +12,7 @@ resource "aws_eks_node_group" "node_group" {
   node_group_name_prefix = each.value.name_prefix
   release_version        = each.value.release_version
   version                = each.value.version
+  tags                   = each.value.tags
 
   node_role_arn = coalesce(
     each.value.node_role_arn,
@@ -63,8 +64,4 @@ resource "aws_eks_node_group" "node_group" {
       max_unavailable_percentage = each.value.update_config.max_unavailable_percentage
     }
   }
-
-  tags = merge(each.value.tags, {
-    "Managed By Terraform" = "true"
-  })
 }

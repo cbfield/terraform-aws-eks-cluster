@@ -1,8 +1,9 @@
-resource "aws_eks_fargate_profile" "fargate_profile" {
+resource "aws_eks_fargate_profile" "this" {
   for_each = var.create ? { for fp in var.fargate_profiles : fp.name => fp } : {}
 
-  cluster_name         = aws_eks_cluster.cluster[0].name
+  cluster_name         = aws_eks_cluster.this[0].name
   fargate_profile_name = each.value.name
+  tags                 = each.value.tags
 
   pod_execution_role_arn = coalesce(
     each.value.pod_execution_role_arn,
@@ -27,8 +28,4 @@ resource "aws_eks_fargate_profile" "fargate_profile" {
       labels    = selector.value.labels
     }
   }
-
-  tags = merge(each.value.tags, {
-    "Managed By Terraform" = "true"
-  })
 }
