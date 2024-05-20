@@ -1,7 +1,7 @@
 resource "aws_eks_access_entry" "this" {
-  for_each = {
+  for_each = var.create ? {
     for entry in var.access_entries : "${entry.principal_arn}-${join(",", entry.k8s_groups)}-${entry.type}" => entry
-  }
+  } : {}
 
   cluster_name      = aws_eks_cluster.this[0].name
   principal_arn     = each.value.principal_arn
@@ -12,7 +12,7 @@ resource "aws_eks_access_entry" "this" {
 }
 
 resource "aws_eks_access_policy_association" "example" {
-  for_each = {
+  for_each = var.create ? {
     for assoc in flatten([
       for entry in var.access_entries : [
         for policy in entry.policy_associations : {
@@ -23,7 +23,7 @@ resource "aws_eks_access_policy_association" "example" {
         }
       ]
     ]) : "${assoc.principal_arn}-${assoc.policy_arn}-${assoc.scope_type}-${join(",",assoc.scope_namespaces)}" => assoc
-  }
+  } : {}
 
   cluster_name  = aws_eks_cluster.this[0].name
   policy_arn    = each.value.policy_arn

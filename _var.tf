@@ -8,7 +8,7 @@ variable "access_entries" {
     policy_associations = optional(list(object({
       policy_arn       = string
       scope_type       = string
-      scope_namespaces = list(string)
+      scope_namespaces = optional(list(string))
     })), [])
   }))
   default = []
