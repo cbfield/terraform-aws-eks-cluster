@@ -1,7 +1,8 @@
-resource "aws_eks_identity_provider_config" "identity" {
+resource "aws_eks_identity_provider_config" "this" {
   for_each = var.create ? { for idp in var.identity_provider_config : idp.oidc.client_id => idp } : {}
 
-  cluster_name = aws_eks_cluster.cluster[0].name
+  cluster_name = aws_eks_cluster.this[0].name
+  tags         = each.value.tags
 
   oidc {
     client_id                     = each.value.oidc.client_id
@@ -13,8 +14,4 @@ resource "aws_eks_identity_provider_config" "identity" {
     username_claim                = each.value.oidc.username_claim
     username_prefix               = each.value.oidc.username_prefix
   }
-
-  tags = merge(try(each.value.tags, null), {
-    "Managed By Terraform" = "true"
-  })
 }

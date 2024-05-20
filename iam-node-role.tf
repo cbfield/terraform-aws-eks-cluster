@@ -6,6 +6,7 @@ resource "aws_iam_role" "node_role" {
   description = "Default role for node groups of the EKS cluster ${var.name}"
   name        = try(var.iam.node_role.name, "eks-${var.name}-nodes")
   path        = try(var.iam.node_role.path, null)
+  tags        = try(var.iam.node_role.tags,null)
 
   assume_role_policy = templatefile(
     "${path.module}/templates/assume-role-policy.json.tpl", {
@@ -18,8 +19,4 @@ resource "aws_iam_role" "node_role" {
     "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
     "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
   ])
-
-  tags = merge(try(var.iam.node_role.tags, {}), {
-    "Managed By Terraform" = "true"
-  })
 }

@@ -1,9 +1,10 @@
-resource "aws_eks_cluster" "cluster" {
+resource "aws_eks_cluster" "this" {
   count = var.create ? 1 : 0
 
   enabled_cluster_log_types = var.enabled_cluster_log_types
   name                      = var.name
   version                   = var.kubernetes_version
+  tags                      = var.tags
 
   role_arn = coalesce(
     try(var.iam.cluster_role.arn, null),
@@ -16,7 +17,7 @@ resource "aws_eks_cluster" "cluster" {
     provider {
       key_arn = coalesce(
         try(var.encryption_config.provider.key_arn, null),
-        try(aws_kms_key.key.0.arn, null)
+        try(aws_kms_key.this.0.arn, null)
       )
     }
   }
@@ -33,9 +34,5 @@ resource "aws_eks_cluster" "cluster" {
     subnet_ids              = var.vpc_config.subnet_ids
   }
 
-  tags = merge(var.tags, {
-    "Managed By Terraform" = "true"
-  })
-
-  depends_on = [aws_cloudwatch_log_group.logs[0]]
+  depends_on = [aws_cloudwatch_log_group.this[0]]
 }
