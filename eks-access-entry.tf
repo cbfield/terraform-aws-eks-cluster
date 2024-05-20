@@ -19,10 +19,10 @@ resource "aws_eks_access_policy_association" "example" {
           principal_arn    = entry.principal_arn
           policy_arn       = policy.policy_arn
           scope_type       = policy.scope_type
-          scope_namespaces = policy.scope_namespaces
+          scope_namespaces = coalesce(policy.scope_namespaces, ["none"])
         }
       ]
-    ]) : "${assoc.principal_arn}-${assoc.policy_arn}-${assoc.scope_type}-${join(",",try(assoc.scope_namespaces,["null"]))}" => assoc
+    ]) : "${assoc.principal_arn}-${assoc.policy_arn}-${assoc.scope_type}-${join(",", assoc.scope_namespaces)}" => assoc
   } : {}
 
   cluster_name  = aws_eks_cluster.this[0].name
