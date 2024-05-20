@@ -1,3 +1,11 @@
+variable "access_config" {
+  type = object({
+    authentication_mode = optional(string)
+    bootstrap_cluster_creator_admin_permissions = optional(bool)
+  })
+  default = {}
+}
+
 variable "access_entries" {
   type = list(object({
     principal_arn = string

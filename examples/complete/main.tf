@@ -13,6 +13,10 @@ module "eks_cluster" {
   }
 
   # optional arguments
+  access_config = {
+    authentication_mode = "API_AND_CONFIG_MAP" # optional, 'API' or 'API_AND_CONFIG_MAP' required if using var.access_entries
+  }
+
   access_entries = [
     for role_arn in data.aws_iam_roles.aws_sso_admin.arns : {
       principal_arn = role_arn                                          # required
