@@ -22,7 +22,7 @@ resource "aws_eks_access_policy_association" "example" {
           scope_namespaces = policy.scope_namespaces
         }
       ]
-    ]) : "${assoc.principal_arn}-${assoc.policy_arn}-${assoc.scope_type}-${join(",",assoc.scope_namespaces)}" => assoc
+    ]) : "${assoc.principal_arn}-${assoc.policy_arn}-${assoc.scope_type}-${join(",",try(assoc.scope_namespaces,["null"]))}" => assoc
   } : {}
 
   cluster_name  = aws_eks_cluster.this[0].name
